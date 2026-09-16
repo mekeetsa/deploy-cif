@@ -30,8 +30,10 @@ RUN apt-get update && \
 # Install IDS Peak drivers
 # This pulls the deb package from a google drive link and installs it
 # dpkg will install the udev rules. However, the rules.d directory doesn't exist in a container
+# Replaced: https://drive.google.com/uc?id=11BJlKy6Jp5HTbDq9Nqw445gDX4AZumbZ
+# with:     https://en.ids-imaging.com/files/downloads/ids-peak/software/linux-desktop/ids-peak-linux-x86-2.1.0.0-64.deb
 RUN pip install gdown && \
-    gdown https://drive.google.com/uc?id=11BJlKy6Jp5HTbDq9Nqw445gDX4AZumbZ && \
+    gdown https://en.ids-imaging.com/files/downloads/ids-peak/software/linux-desktop/ids-peak-linux-x86-2.1.0.0-64.deb && \
     mkdir /etc/udev && \
     mkdir /etc/udev/rules.d && \
     dpkg -i ids-peak-linux-x86-2.1.0.0-64.deb
