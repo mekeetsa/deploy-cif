@@ -53,8 +53,14 @@ Note: It is of course possible to run the software without the container environ
 
 ## 3. Initialize Distrobox
 
-1. Login as the user that will use the instrument 
-2. Create the box
+1. Login as the user that will use the instrument. \
+   If you continue the earlier session, ensure that you are in the home directory:
+
+```bash
+cd
+```
+
+3. Create the box
 
 ```bash
 [user@host ~]$ distrobox create --image localhost/deploy-cif:latest --name cif
