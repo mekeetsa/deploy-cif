@@ -177,3 +177,35 @@ julia>
 ```
 cd /opt/csDAQ/src/ && julia --project main.jl && cd .
 ```
+
+## Fixing python libraries
+
+Below is the fix if you get a message "A module that was compiled using NumPy 1.x cannot be run in NumPy 2.2.6"
+or similar.
+
+Background: `ids_peak_ipl` contains a compiled native extension (`_peak_ipl_python_interface`) 
+that was built against **NumPy 1.x**, while your system currently has **NumPy 2.2.6**. 
+The IDS IPL Python package is being imported by `IDSpeak`, which is then loaded through Julia's `PyCall`.
+
+The quickest and safest fix for this deployment is therefore to **downgrade NumPy to a 1.x version**.
+To use NumPy 1.26.4, do:
+
+```
+sudo python3 -m pip install --force-reinstall "numpy==1.26.4"
+```
+
+Then verify:
+
+```
+python3 -c "import numpy; print(numpy.__version__)"
+python3 -c "from ids_peak_ipl import ids_peak_ipl; print('IDS IPL OK')"
+python3 -c "from ids_peak_ipl import ids_peak_ipl; from ids_peak import ids_peak; print('IDS Peak OK')"
+```
+
+You should get:
+
+```
+1.26.4
+IDS IPL OK
+IDS Peak OK
+```
